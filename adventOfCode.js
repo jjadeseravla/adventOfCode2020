@@ -61,12 +61,45 @@ const data2 = require('./data2');
 // //it said must have 1-3 b.
 // //how many passwords are valid according to their policies?
 
-function loopData2(data) {
+// function loopData2(data) {
+//   let count = 0;
+//   console.log(data[0]);
+//   //console.log(data[0][0]);
+//   for (var i = 0; i < data.length; i++) {
+//     const isValid = validPasswords(data[i][0], data[i][1], data[i][2], data[i][3]);
+//     if (isValid) {
+//       count++;
+//     }
+//   }
+//   return count;
+// }
+//
+// function validPasswords(min, max, letter, password) {
+//   console.log(password);
+//   var passwordArr = password.split("");
+//
+//   let newArr = [];
+//
+//   for (var i = 0; i < passwordArr.length; i++) {
+//     if (passwordArr[i] === letter) {
+//       newArr.push(letter);
+//     }
+//   }
+//   if (newArr.length >= min && newArr.length <= max) {
+//     return true
+//   }
+//   return false;
+// }
+
+
+//need to check if index 1 is equal to a OR index 3 is equal to a
+// console.log(validPasswords(1, 3, "a", "abcde")); -valid
+// console.log(validPasswords(1, 3, "b", "cdefg")); - invalid - none are b
+// console.log(validPasswords(2, 9, "c", "cccccccc")); -invalid - both are c
+function loopData2Again(data) {
   let count = 0;
-  console.log(data[0]);
-  //console.log(data[0][0]);
   for (var i = 0; i < data.length; i++) {
-    const isValid = validPasswords(data[i][0], data[i][1], data[i][2], data[i][3]);
+    const isValid = validPasswordsAgain(data[i][0], data[i][1], data[i][2], data[i][3]);
     if (isValid) {
       count++;
     }
@@ -74,24 +107,21 @@ function loopData2(data) {
   return count;
 }
 
-function validPasswords(min, max, letter, password) {
-  console.log(password);
+function validPasswordsAgain(min, max, letter, password) {
   var passwordArr = password.split("");
 
   let newArr = [];
+  let count = 0;
 
-  for (var i = 0; i < passwordArr.length; i++) {
-    if (passwordArr[i] === letter) {
-      newArr.push(letter);
+    if (passwordArr[min -1] === letter && passwordArr[max-1] === letter) {
+      return false;
     }
-  }
-  if (newArr.length >= min && newArr.length <= max) {
-    return true
-  }
-  return false;
+    else if (passwordArr[min -1] === letter || passwordArr[max-1] === letter) {
+      return true;
+    }
+    return false;
+
 }
 
-console.log(loopData2(data2.data));
-// console.log(validPasswords(1, 3, "a", "abcde"));
-// console.log(validPasswords(1, 3, "b", "cdefg"));
-// console.log(validPasswords(2, 9, "c", "cccccccc"));
+//console.log(validPasswordsAgain(1, 3, "a", "abcde"));
+console.log(loopData2Again(data2.data));
