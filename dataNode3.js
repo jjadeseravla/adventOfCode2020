@@ -28,7 +28,6 @@ async function part1(slope=[3,1]) {
     const grid = arrOfStrings.map(ln => ln.split('')); //each string in the array is split into an array of characters, so a 2D array ie a grid
     const location = theLocation(grid[0].length,slope); //grid[0].length is width
     let trees = 0;
-    console.log(location.getY());
     while(location.getY()<grid.length-1){
         location.move();
         if(grid[location.getY()][location.getX()] == '#') {
@@ -55,17 +54,21 @@ function theLocation(width,slope){
   };
 }
 
-// Part 2
-// function part2() {
-//     const slopes = [[1,1],[3,1],[5,1],[7,1],[1,2]];
-//     let trees = 1;
-//     for(const sl of slopes){
-//         trees *= part1(sl);
-//     }
+//Part 2
+async function part2() {
+    const slopes = [[1,1],[3,1],[5,1],[7,1],[1,2]];
+    let trees = 1;
+    for(const sl of slopes){
+        trees *= await part1(sl);
+    }
 
-// return trees;
-// }
+return trees;
+}
 
-part1().then(function(res) {
+// part1().then(function(res) {
+//   console.log(res);
+// });
+
+part2().then(function(res) {
   console.log(res);
 });
