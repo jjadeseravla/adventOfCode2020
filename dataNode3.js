@@ -26,28 +26,33 @@ const lines = [];
 async function part1(slope=[3,1]) {
     const arrOfStrings = await processLineByLine(); //processLineByLine() is function above that makes data3 an array of strings
     const grid = arrOfStrings.map(ln => ln.split('')); //each string in the array is split into an array of characters, so a 2D array ie a grid
-console.log(grid[0]);
-    const location = new Location(grid[0].length,slope);
+    const location = theLocation(grid[0].length,slope); //grid[0].length is width
     let trees = 0;
-    while(location.y<grid.length-1){
+    console.log(location.getY());
+    while(location.getY()<grid.length-1){
         location.move();
-        if(grid[location.y][location.x] == '#') {
+        if(grid[location.getY()][location.getX()] == '#') {
             trees++;
         }
     }
-
     return trees;
 }
 
-function Location(hillWidth,slope){
-    this.x = 0;
-    this.y = 0;
-    this.width = hillWidth;
-    this.move = ()=>{
-        this.x+=slope[0];
-        this.y+=slope[1];
-        if(this.x > this.width-1) this.x-=this.width;
-    };
+function theLocation(width,slope){
+  let x = 0;
+  let y = 0;
+  let move = ()=>{
+    x+=slope[0];
+    y+=slope[1];
+    if(x > width-1) {
+      x-=width;
+    }
+  };
+  return {
+    getX: function(){return x}, //the revealing module pattern : because previously using this and that would mutate, so need to put a getter so not stay static when return
+    getY: function(){return y},
+    move
+  };
 }
 
 // Part 2
