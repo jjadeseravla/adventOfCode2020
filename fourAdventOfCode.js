@@ -46,19 +46,47 @@ async function loopThroughData() {
   return ans.length;
 }
 
-loopThroughData().then(function(res) {
-  console.log(res);
-});
+// loopThroughData().then(function(res) {
+//   console.log(res);
+// });
 
 function isValidPassport(passportInfo, arrOfSubstrings=["ecl", "pid", "eyr", "hcl", "byr", "iyr", "hgt"]) {
   var count = 0;
+  let theValid = [];
   for (var i in arrOfSubstrings) {
     if (passportInfo.indexOf(arrOfSubstrings[i]) === -1) {
       return false;
     }
   }
+  theValid.push(passportInfo)
   return true;
 }
+
+ function dataIntoObject(data) { //not working properly
+  //const data = await processLineByLine();
+  const arr = data.split(" ");
+
+  let map = {};
+
+  for (var i = 0; i < arr.length; i++) {
+    let parts = arr[i].split(':');
+    map[parts[0]] = parts[1].substr(1, parts[1].length - 2).toString(); //this line
+  }
+  return map;
+}
+
+function checkIfMapDataValid(data) {
+  const map = dataIntoObject(data);
+console.log(map);
+  for (const [key, value] of Object.entries(map)) {
+    console.log(key.type());
+  }
+
+}
+
+
+  console.log(checkIfMapDataValid("ecl:gry pid:860033327 eyr:2020 hcl:#fffffdbyr:1937 iyr:2017 cid:147 hgt:183cm"));
+
 
 console.log(isValidPassport("ecl:gry pid:860033327 eyr:2020 hcl:#fffffdbyr:1937 iyr:2017 cid:147 hgt:183cm"));
 console.log(isValidPassport("iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884hcl:#cfa07d byr:1929"));
